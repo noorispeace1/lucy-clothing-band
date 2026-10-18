@@ -21,16 +21,25 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-neutral-100 transition-all">
-      {/* Top Announcement Bar */}
+      {/* Top Announcement Bar - Infinite Marquee */}
       {siteConfig.announcement.enabled && (
-        <div className="bg-[#111111] text-white text-[10px] sm:text-[11px] font-medium tracking-[0.2em] py-2 px-4 text-center uppercase flex items-center justify-center gap-2">
-          <span>{siteConfig.announcement.text}</span>
-          <Link
-            href={siteConfig.announcement.linkHref}
-            className="underline underline-offset-4 hover:text-[#b38e5d] transition-colors font-semibold hidden md:inline"
-          >
-            {siteConfig.announcement.linkText}
-          </Link>
+        <div className="bg-[#111111] text-white text-[10px] sm:text-[11px] font-medium tracking-[0.2em] py-2 overflow-hidden border-b border-neutral-800 select-none">
+          <div className="animate-marquee whitespace-nowrap flex items-center">
+            {[0, 1, 2, 3].map((idx) => (
+              <div key={idx} className="flex items-center gap-6 sm:gap-8 mx-4 sm:mx-6 shrink-0">
+                <span className="text-neutral-200">{siteConfig.announcement.text}</span>
+                <Link
+                  href={siteConfig.announcement.linkHref}
+                  className="underline underline-offset-4 text-[#c8a97e] hover:text-white transition-colors font-semibold"
+                >
+                  {siteConfig.announcement.linkText}
+                </Link>
+                <span className="text-[#b38e5d] text-[10px]">✦</span>
+                <span className="text-neutral-300">BESPOKE BRIDAL ATELIER CONSULTATIONS OPEN AT BANANI</span>
+                <span className="text-[#b38e5d] text-[10px]">✦</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
