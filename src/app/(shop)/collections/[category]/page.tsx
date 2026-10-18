@@ -3,6 +3,17 @@ import { notFound } from "next/navigation";
 import { MOCK_PRODUCTS } from "@/lib/constants";
 import { ProductCard } from "@/components/common/ProductCard";
 
+export function generateStaticParams() {
+  return [
+    { category: "luxury-pret" },
+    { category: "formals" },
+    { category: "kids" },
+    { category: "winter-2026" },
+    { category: "bridal" },
+    { category: "lawn" },
+  ];
+}
+
 interface CategoryPageProps {
   params: Promise<{
     category: string;

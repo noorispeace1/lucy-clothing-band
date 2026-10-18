@@ -5,6 +5,12 @@ import { MOCK_PRODUCTS } from "@/lib/constants";
 import { ProductDetailClient } from "@/components/common/ProductDetailClient";
 import { ProductCard } from "@/components/common/ProductCard";
 
+export function generateStaticParams() {
+  return MOCK_PRODUCTS.map((product) => ({
+    slug: product.slug,
+  }));
+}
+
 interface ProductPageProps {
   params: Promise<{
     slug: string;
