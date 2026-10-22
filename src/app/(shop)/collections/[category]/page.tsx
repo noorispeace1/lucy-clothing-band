@@ -1,7 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { MOCK_PRODUCTS } from "@/lib/constants";
 import { ProductCard } from "@/components/common/ProductCard";
+
+export const instant = false;
 
 export function generateStaticParams() {
   return [
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: CategoryPageProps) {
   };
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+async function CategoryContent({ params }: CategoryPageProps) {
   const { category } = await params;
 
   const validCategories: Record<string, string> = {
@@ -89,5 +91,19 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CategoryPage({ params }: CategoryPageProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="py-24 text-center text-xs tracking-widest uppercase text-neutral-400">
+          Loading Atelier Collection...
+        </div>
+      }
+    >
+      <CategoryContent params={params} />
+    </Suspense>
   );
 }

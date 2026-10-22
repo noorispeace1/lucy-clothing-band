@@ -1,9 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MOCK_PRODUCTS } from "@/lib/constants";
 import { ProductDetailClient } from "@/components/common/ProductDetailClient";
 import { ProductCard } from "@/components/common/ProductCard";
+
+export const instant = false;
 
 export function generateStaticParams() {
   return MOCK_PRODUCTS.map((product) => ({
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
   };
 }
 
-export default async function ProductDetailPage({ params }: ProductPageProps) {
+async function ProductDetailContent({ params }: ProductPageProps) {
   const { slug } = await params;
   const product = MOCK_PRODUCTS.find((p) => p.slug === slug);
 
@@ -86,5 +88,19 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProductDetailPage({ params }: ProductPageProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="py-24 text-center text-xs tracking-widest uppercase text-neutral-400">
+          Loading Couture Piece...
+        </div>
+      }
+    >
+      <ProductDetailContent params={params} />
+    </Suspense>
   );
 }
