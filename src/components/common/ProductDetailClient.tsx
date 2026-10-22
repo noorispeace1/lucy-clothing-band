@@ -74,18 +74,23 @@ export function ProductDetailClient({ product }: { product: Product }) {
             {product.name}
           </h1>
 
-          <div className="flex items-center gap-3 mt-3">
+          <div className="flex items-center flex-wrap gap-3 mt-3">
             <span className="text-xl sm:text-2xl font-semibold text-black tracking-wide">
-              {formatPrice(product.price)}
+              {formatPrice(product.price * quantity)}
             </span>
             {product.originalPrice && (
               <span className="text-sm text-neutral-400 line-through">
-                {formatPrice(product.originalPrice)}
+                {formatPrice(product.originalPrice * quantity)}
               </span>
             )}
             {product.discountPercentage && (
               <span className="text-xs bg-red-100 text-red-800 font-semibold px-2 py-0.5 rounded">
                 SAVE {product.discountPercentage}%
+              </span>
+            )}
+            {quantity > 1 && (
+              <span className="text-xs text-neutral-500 font-medium">
+                ({formatPrice(product.price)} each)
               </span>
             )}
           </div>
